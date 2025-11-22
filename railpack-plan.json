@@ -1,0 +1,11 @@
+{
+  "env": {
+    "APP_KEY": "base64:eSo2CYdFkUVLryWFhrmQ8aw3IoloZXhuvGxX2YbGWTM",
+    "DB_CONNECTION": "mysql",
+    "DB_HOST": "yamanote.proxy.rlwy.net",
+    "DB_PORT": "43380",
+    "DB_DATABASE": "railway",
+    "DB_USERNAME": "root",
+    "DB_PASSWORD": "sePVXlJjingaVSoBadvarMSdjNfGzaXu"
+  }
+}
