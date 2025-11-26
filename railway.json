@@ -1,0 +1,10 @@
+{
+  "deployments": [
+    {
+      "name": "PondokCupang",
+      "volumes": [
+        "/var/www/html/storage/app/public"
+      ]
+    }
+  ]
+}
