@@ -34,7 +34,7 @@ class FishController extends Controller
         $data = $request->only(['name','type','price','stock','description']);
         
         if ($request->hasFile('image')) {
-            // KOREKSI: Panggil helper yang sudah diperbaiki
+            // Panggil helper yang sudah diperbaiki
             $data['image'] = $this->storeResizedImage($request->file('image'));
         }
 
@@ -66,7 +66,7 @@ class FishController extends Controller
                 Storage::disk('public')->delete($fish->image);
             }
             
-            // KOREKSI: Panggil helper yang sudah diperbaiki
+            // Panggil helper yang sudah diperbaiki
             $resizedPath = $this->storeResizedImage($request->file('image'));
             $data['image'] = $resizedPath;
         }
