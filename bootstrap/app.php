@@ -12,12 +12,12 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
 
-        // Tambahkan TrustProxies bawaan Laravel 11
+        // Pakai TrustProxies MU sendiri, bukan bawaan Laravel
         $middleware->web(append: [
-            \Illuminate\Http\Middleware\TrustProxies::class,
+            \App\Http\Middleware\TrustProxies::class,
         ]);
 
-        // Ini alias yang kamu punya
+        // Alias yang kamu punya
         $middleware->alias([
             'auth' => \App\Http\Middleware\Authenticate::class,
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
