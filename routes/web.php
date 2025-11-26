@@ -13,6 +13,15 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 
+
+// -----------------------------
+// ROUTE SEMENTARA UNTUK CLEAR CACHE
+// -----------------------------
+Route::get('/clear-cache', function () {
+    Artisan::call('optimize:clear');
+    return 'CLEAR BERHASIL COK!';
+});
+
 // Halaman awal
 Route::get('/', function () {
     return view('welcome');
@@ -66,10 +75,4 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name
 
 require __DIR__.'/auth.php';
 
-// -----------------------------
-// ROUTE SEMENTARA UNTUK CLEAR CACHE
-// -----------------------------
-Route::get('/clear-cache', function () {
-    Artisan::call('optimize:clear');
-    return 'CLEAR BERHASIL COK!';
-});
+
