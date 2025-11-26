@@ -11,17 +11,17 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-    $middleware->web(append: [
-        // middleware web di sini
-    ]);
+        // Tambahkan TrustProxies ke grup web
+        $middleware->web(append: [
+            \App\Http\Middleware\TrustProxies::class,
+        ]);
 
-   $middleware->alias([
-    'auth' => \App\Http\Middleware\Authenticate::class,
-    'admin' => \App\Http\Middleware\AdminMiddleware::class,
-]);
-
-})
-
+        // Alias middleware lain
+        $middleware->alias([
+            'auth' => \App\Http\Middleware\Authenticate::class,
+            'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        ]);
+    })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();
