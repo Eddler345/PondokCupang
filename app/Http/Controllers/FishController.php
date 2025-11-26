@@ -32,9 +32,10 @@ class FishController extends Controller
         ]);
 
         $data = $request->only(['name','type','price','stock','description']);
+        
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('uploads/fish', 'public');
-            $data['image'] = $path;
+            // KOREKSI: Panggil helper yang sudah diperbaiki
+            $data['image'] = $this->storeResizedImage($request->file('image'));
         }
 
         BettaFish::create($data);
@@ -64,8 +65,9 @@ class FishController extends Controller
             if ($fish->image) {
                 Storage::disk('public')->delete($fish->image);
             }
-            $file = $request->file('image');
-            $resizedPath = $this->storeResizedImage($file);
+            
+            // KOREKSI: Panggil helper yang sudah diperbaiki
+            $resizedPath = $this->storeResizedImage($request->file('image'));
             $data['image'] = $resizedPath;
         }
 
@@ -94,6 +96,9 @@ class FishController extends Controller
      */
     protected function storeResizedImage($file)
     {
+        // KOREKSI UTAMA: Kita pakai 'fish' sebagai folder tujuan, BUKAN 'uploads/fish'
+        $destinationFolder = 'fish'; 
+        
         try {
             if (class_exists(\Intervention\Image\ImageManagerStatic::class)) {
                 $img = \Intervention\Image\ImageManagerStatic::make($file->getRealPath());
@@ -102,7 +107,9 @@ class FishController extends Controller
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 });
-                $filename = 'uploads/fish/' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
+                // KOREKSI: Hilangkan 'uploads/' saat menyimpan
+                $filename = $destinationFolder . '/' . uniqid() . '.' . $file->getClientOriginalExtension();
                 Storage::disk('public')->put($filename, (string) $img->encode());
                 return $filename;
             }
@@ -110,8 +117,9 @@ class FishController extends Controller
             // fallback below
         }
 
+        // KOREKSI: Hilangkan 'uploads/' di fallback store original file
         // fallback: store original file
-        return $file->store('uploads/fish', 'public');
+        return $file->store($destinationFolder, 'public');
     }
 
     public function destroy(BettaFish $fish)
